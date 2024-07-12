@@ -32,9 +32,10 @@ set( SOURCE_FILES
 add_library( zxing SHARED ${HEADER_FILES} ${SOURCE_FILES} )
 
 target_link_libraries( zxing PRIVATE client common core multi )
+find_library( FOUNDATION_FRAMEWORK Foundation )
 find_library( AVFOUNDATION_FRAMEWORK AVFoundation )
 find_library( QUARTZCORE_FRAMEWORK QuartzCore )
-target_link_libraries( zxing PRIVATE ${AVFOUNDATION_FRAMEWORK} ${QUARTZCORE_FRAMEWORK} )
+target_link_libraries( zxing PRIVATE ${FOUNDATION_FRAMEWORK} ${AVFOUNDATION_FRAMEWORK} ${QUARTZCORE_FRAMEWORK} )
 
 if( CMAKE_SYSTEM_NAME STREQUAL Darwin )
     find_library( COCOA_FRAMEWORK Cocoa )
@@ -100,7 +101,7 @@ list( APPEND ZXINGOBJC_PUBLIC_HEADERS ${CMAKE_CURRENT_LIST_DIR}/ZXMultiFormatRea
 list( APPEND ZXINGOBJC_PUBLIC_HEADERS ${CMAKE_CURRENT_LIST_DIR}/ZXMultiFormatWriter.h )
 set_target_properties( zxing PROPERTIES
         FRAMEWORK TRUE
-        OUTPUT_NAME ZXingObjC
+        LIBRARY_OUTPUT_NAME ZXingObjC
         MACOSX_FRAMEWORK_IDENTIFIER com.zxing.ZXingObjC
         PUBLIC_HEADER "${ZXINGOBJC_PUBLIC_HEADERS}" )
 

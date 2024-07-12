@@ -13,7 +13,7 @@ set( SOURCE_FILES
     ZXAztecReader.m
     ZXAztecWriter.m )
 
-add_library( aztec OBJECT ${HEADER_FILES} ${SOURCE_FILES} )
+add_library( aztec STATIC ${HEADER_FILES} ${SOURCE_FILES} )
 target_link_libraries( aztec
     PRIVATE
         common

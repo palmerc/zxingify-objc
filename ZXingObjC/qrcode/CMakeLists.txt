@@ -11,7 +11,7 @@ set( SOURCE_FILES
     ZXQRCodeWriter.m
     ZXQRCodeReader.m )
 
-add_library( qrcode OBJECT ${HEADER_FILES} ${SOURCE_FILES} )
+add_library( qrcode STATIC ${HEADER_FILES} ${SOURCE_FILES} )
 target_link_libraries( qrcode
     PRIVATE
         common

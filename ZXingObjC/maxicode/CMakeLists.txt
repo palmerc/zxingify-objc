@@ -9,7 +9,7 @@ set( HEADER_FILES
 set( SOURCE_FILES 
     ZXMaxiCodeReader.m )
 
-add_library( maxicode OBJECT ${HEADER_FILES} ${SOURCE_FILES} )
+add_library( maxicode STATIC ${HEADER_FILES} ${SOURCE_FILES} )
 target_link_libraries( maxicode PRIVATE common core maxicode-decoder )
 target_include_directories( maxicode
     PUBLIC

@@ -45,6 +45,14 @@ target_include_directories( common
     PUBLIC
         ${CMAKE_CURRENT_LIST_DIR} )
 set_property( TARGET common APPEND_STRING PROPERTY COMPILE_FLAGS -fobjc-arc )
+
+add_library( common-interface INTERFACE )
+target_link_libraries( common-interface INTERFACE common )
+target_sources( common-interface
+    INTERFACE
+        $<TARGET_OBJECTS:common>
+        $<TARGET_OBJECTS:common-detector>
+        $<TARGET_OBJECTS:common-reedsolomon> )
     
 add_subdirectory( detector )
 add_subdirectory( reedsolomon )

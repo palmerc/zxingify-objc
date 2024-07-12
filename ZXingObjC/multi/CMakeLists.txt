@@ -17,4 +17,10 @@ target_include_directories( multi
     PUBLIC
         ${CMAKE_CURRENT_LIST_DIR} )
 set_property( TARGET multi APPEND_STRING PROPERTY COMPILE_FLAGS -fobjc-arc )
+
+add_library( multi-interface INTERFACE )
+target_link_libraries( multi-interface INTERFACE multi )
+target_sources( multi-interface
+    INTERFACE
+        $<TARGET_OBJECTS:multi> )
     

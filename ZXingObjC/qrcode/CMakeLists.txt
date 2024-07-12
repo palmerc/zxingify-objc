@@ -11,7 +11,7 @@ set( SOURCE_FILES
     ZXQRCodeWriter.m
     ZXQRCodeReader.m )
 
-add_library( qrcode STATIC ${HEADER_FILES} ${SOURCE_FILES} )
+add_library( qrcode OBJECT ${HEADER_FILES} ${SOURCE_FILES} )
 target_link_libraries( qrcode
     PRIVATE
         common
@@ -25,6 +25,17 @@ target_include_directories( qrcode
     PUBLIC
         ${CMAKE_CURRENT_LIST_DIR} )
 set_property( TARGET qrcode APPEND_STRING PROPERTY COMPILE_FLAGS -fobjc-arc )
+
+add_library( qrcode-interface INTERFACE )
+target_link_libraries( qrcode-interface INTERFACE qrcode )
+target_sources( qrcode-interface
+        INTERFACE
+        $<TARGET_OBJECTS:qrcode>
+        $<TARGET_OBJECTS:qrcode-decoder>
+        $<TARGET_OBJECTS:qrcode-detector>
+        $<TARGET_OBJECTS:qrcode-encoder>
+        $<TARGET_OBJECTS:qrcode-multi>
+        $<TARGET_OBJECTS:qrcode-multi-detector> )
     
 add_subdirectory( encoder )
 add_subdirectory( multi )

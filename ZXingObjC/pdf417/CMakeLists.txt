@@ -15,7 +15,7 @@ set( SOURCE_FILES
     ZXPDF417Reader.m
     ZXPDF417ResultMetadata.m )
 
-add_library( pdf417 STATIC ${HEADER_FILES} ${SOURCE_FILES} )
+add_library( pdf417 OBJECT ${HEADER_FILES} ${SOURCE_FILES} )
 target_link_libraries( pdf417 PRIVATE common core multi pdf417-decoder pdf417-decoder-ec pdf417-detector pdf417-encoder )
 target_include_directories( pdf417
     PUBLIC

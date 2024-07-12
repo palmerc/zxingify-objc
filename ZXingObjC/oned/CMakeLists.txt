@@ -63,7 +63,7 @@ set( SOURCE_FILES
     ZXEAN13Writer.m
     ZXUPCEANExtensionSupport.m )
 
-add_library( oned STATIC ${HEADER_FILES} ${SOURCE_FILES} )
+add_library( oned OBJECT ${HEADER_FILES} ${SOURCE_FILES} )
 target_link_libraries( oned PRIVATE common core oned-rss oned-rss-expanded oned-rss-expanded-decoders)
 target_include_directories( oned
     PUBLIC

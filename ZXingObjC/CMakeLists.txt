@@ -21,14 +21,13 @@ add_subdirectory( oned )
 add_subdirectory( pdf417 )
 add_subdirectory( qrcode )
 
+set( HEADER_FILES
+        ZXMultiFormatReader.h
+        ZXMultiFormatWriter.h )
 
 set( SOURCE_FILES
         ZXMultiFormatReader.m
         ZXMultiFormatWriter.m )
-
-set( HEADER_FILES
-        ZXMultiFormatReader.h
-        ZXMultiFormatWriter.h )
 
 add_library( zxing SHARED ${HEADER_FILES} ${SOURCE_FILES} )
 
@@ -38,22 +37,22 @@ find_library( QUARTZCORE_FRAMEWORK QuartzCore )
 target_link_libraries( zxing PRIVATE ${AVFOUNDATION_FRAMEWORK} ${QUARTZCORE_FRAMEWORK} )
 
 if( CMAKE_SYSTEM_NAME STREQUAL Darwin )
-find_library( COCOA_FRAMEWORK Cocoa )
-find_library( COREMEDIA_FRAMEWORK CoreMedia )
-target_link_libraries( zxing PRIVATE ${COCOA_FRAMEWORK} ${COREMEDIA_FRAMEWORK} )
+    find_library( COCOA_FRAMEWORK Cocoa )
+    find_library( COREMEDIA_FRAMEWORK CoreMedia )
+    target_link_libraries( zxing PRIVATE ${COCOA_FRAMEWORK} ${COREMEDIA_FRAMEWORK} )
 endif()
 
 if( CMAKE_SYSTEM_NAME STREQUAL iOS )
-find_library( UIKIT_FRAMEWORK UIKit )
-find_library( COREGRAPHICS_FRAMEWORK CoreGraphics )
-find_library( COREVIDEO_FRAMEWORK CoreVideo )
-find_library( IMAGEIO_FRAMEWORK ImageIO )
-target_link_libraries( zxing
-    PRIVATE
-        ${COREGRAPHICS_FRAMEWORK}
-        ${COREVIDEO_FRAMEWORK}
-        ${IMAGEIO_FRAMEWORK}
-        ${UIKIT_FRAMEWORK} )
+    find_library( UIKIT_FRAMEWORK UIKit )
+    find_library( COREGRAPHICS_FRAMEWORK CoreGraphics )
+    find_library( COREVIDEO_FRAMEWORK CoreVideo )
+    find_library( IMAGEIO_FRAMEWORK ImageIO )
+    target_link_libraries( zxing
+        PRIVATE
+            ${COREGRAPHICS_FRAMEWORK}
+            ${COREVIDEO_FRAMEWORK}
+            ${IMAGEIO_FRAMEWORK}
+            ${UIKIT_FRAMEWORK} )
 endif()
 
 set( ZXINGOBJC_PUBLIC_HEADERS )
@@ -64,42 +63,36 @@ target_compile_definitions( zxing PUBLIC ZXINGOBJC_USE_SUBSPECS )
 if( ZXINGOBJC_AZTEC )
     target_compile_definitions( zxing PUBLIC ZXINGOBJC_AZTEC )
     target_link_libraries( zxing PRIVATE aztec )
-    target_include_directories( zxing PUBLIC aztec )
     list( APPEND ZXINGOBJC_PUBLIC_HEADERS ${CMAKE_CURRENT_LIST_DIR}/aztec/ZXingObjCAztec.h )
 endif( ZXINGOBJC_AZTEC )
 
 if( ZXINGOBJC_DATAMATRIX )
     target_compile_definitions( zxing PUBLIC ZXINGOBJC_DATAMATRIX )
     target_link_libraries( zxing PRIVATE datamatrix )
-    target_include_directories( zxing PUBLIC datamatrix )
     list( APPEND ZXINGOBJC_PUBLIC_HEADERS ${CMAKE_CURRENT_LIST_DIR}/datamatrix/ZXingObjCDataMatrix.h )
 endif( ZXINGOBJC_DATAMATRIX )
 
 if( ZXINGOBJC_MAXICODE )
     target_compile_definitions( zxing PUBLIC ZXINGOBJC_MAXICODE )
     target_link_libraries( zxing PRIVATE maxicode )
-    target_include_directories( zxing PUBLIC maxicode )
     list( APPEND ZXINGOBJC_PUBLIC_HEADERS ${CMAKE_CURRENT_LIST_DIR}/maxicode/ZXingObjCMaxiCode.h )
 endif( ZXINGOBJC_MAXICODE )
 
 if( ZXINGOBJC_ONED )
     target_compile_definitions( zxing PUBLIC ZXINGOBJC_ONED )
     target_link_libraries( zxing PRIVATE oned )
-    target_include_directories( zxing PUBLIC oned )
     list( APPEND ZXINGOBJC_PUBLIC_HEADERS ${CMAKE_CURRENT_LIST_DIR}/oned/ZXingObjCOneD.h )
 endif( ZXINGOBJC_ONED )
 
 if( ZXINGOBJC_PDF417 )
     target_compile_definitions( zxing PUBLIC ZXINGOBJC_PDF417 )
     target_link_libraries( zxing PRIVATE pdf417 )
-    target_include_directories( zxing PUBLIC pdf417 )
     list( APPEND ZXINGOBJC_PUBLIC_HEADERS ${CMAKE_CURRENT_LIST_DIR}/pdf417/ZXingObjCPDF417.h )
 endif( ZXINGOBJC_PDF417 )
 
 if( ZXINGOBJC_QRCODE )
     target_compile_definitions( zxing PUBLIC ZXINGOBJC_QRCODE )
     target_link_libraries( zxing PRIVATE qrcode )
-    target_include_directories( zxing PUBLIC qrcode )
     list( APPEND ZXINGOBJC_PUBLIC_HEADERS ${CMAKE_CURRENT_LIST_DIR}/qrcode/ZXingObjCQRCode.h )
 endif( ZXINGOBJC_QRCODE )
 

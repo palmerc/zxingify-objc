@@ -39,20 +39,18 @@ set( SOURCE_FILES
     ZXIntArray.m )
 
 add_library( common OBJECT ${HEADER_FILES} ${SOURCE_FILES} )
+target_sources( common
+    PUBLIC
+        $<TARGET_OBJECTS:common-detector>
+        $<TARGET_OBJECTS:common-reedsolomon> )
 target_include_directories( common
     PRIVATE
         $<TARGET_PROPERTY:core,INCLUDE_DIRECTORIES>
     PUBLIC
+        $<TARGET_PROPERTY:common-detector,INCLUDE_DIRECTORIES>
+        $<TARGET_PROPERTY:common-reedsolomon,INCLUDE_DIRECTORIES>
         ${CMAKE_CURRENT_LIST_DIR} )
 set_property( TARGET common APPEND_STRING PROPERTY COMPILE_FLAGS -fobjc-arc )
 
-add_library( common-interface INTERFACE )
-target_link_libraries( common-interface INTERFACE common )
-target_sources( common-interface
-    INTERFACE
-        $<TARGET_OBJECTS:common>
-        $<TARGET_OBJECTS:common-detector>
-        $<TARGET_OBJECTS:common-reedsolomon> )
-    
 add_subdirectory( detector )
 add_subdirectory( reedsolomon )

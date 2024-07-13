@@ -46,10 +46,4 @@ target_include_directories( core
     PUBLIC
         ${CMAKE_CURRENT_LIST_DIR} )
 set_property( TARGET core APPEND_STRING PROPERTY COMPILE_FLAGS -fobjc-arc )
-
-add_library( core-interface INTERFACE )
-target_link_libraries( core-interface INTERFACE core )
-target_sources( core-interface
-    INTERFACE
-        $<TARGET_OBJECTS:core> )
     

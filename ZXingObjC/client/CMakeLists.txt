@@ -16,17 +16,15 @@ set( SOURCE_FILES
     ZXCGImageLuminanceSourceInfo.m )
 
 add_library( client OBJECT ${HEADER_FILES} ${SOURCE_FILES} )
+target_sources( client
+    PUBLIC
+        $<TARGET_OBJECTS:client-result> )
 target_link_libraries( client PRIVATE common core )
 target_include_directories( client
+    PRIVATE
+        $<TARGET_PROPERTY:client-result,INCLUDE_DIRECTORIES>
     PUBLIC
         ${CMAKE_CURRENT_LIST_DIR} )
 set_property( TARGET client APPEND_STRING PROPERTY COMPILE_FLAGS -fobjc-arc )
-
-add_library( client-interface INTERFACE )
-target_link_libraries( client-interface INTERFACE client )
-target_sources( client-interface
-    INTERFACE
-        $<TARGET_OBJECTS:client>
-        $<TARGET_OBJECTS:client-result> )
     
 add_subdirectory( result )

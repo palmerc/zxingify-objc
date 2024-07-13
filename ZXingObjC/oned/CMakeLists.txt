@@ -64,19 +64,19 @@ set( SOURCE_FILES
     ZXUPCEANExtensionSupport.m )
 
 add_library( oned OBJECT ${HEADER_FILES} ${SOURCE_FILES} )
-target_link_libraries( oned PRIVATE common core oned-rss oned-rss-expanded oned-rss-expanded-decoders)
-target_include_directories( oned
+target_sources( oned
     PUBLIC
-        ${CMAKE_CURRENT_LIST_DIR} )
-set_property( TARGET oned APPEND_STRING PROPERTY COMPILE_FLAGS -fobjc-arc )
-
-add_library( oned-interface INTERFACE )
-target_link_libraries( oned-interface INTERFACE oned )
-target_sources( oned-interface
-        INTERFACE
-        $<TARGET_OBJECTS:oned>
         $<TARGET_OBJECTS:oned-rss>
         $<TARGET_OBJECTS:oned-rss-expanded>
         $<TARGET_OBJECTS:oned-rss-expanded-decoders> )
+target_link_libraries( oned PRIVATE common core )
+target_include_directories( oned
+    PRIVATE
+        $<TARGET_PROPERTY:oned-rss,INCLUDE_DIRECTORIES>
+        $<TARGET_PROPERTY:oned-rss-expanded,INCLUDE_DIRECTORIES>
+        $<TARGET_PROPERTY:oned-rss-expanded-decoders,INCLUDE_DIRECTORIES>
+    PUBLIC
+        ${CMAKE_CURRENT_LIST_DIR} )
+set_property( TARGET oned APPEND_STRING PROPERTY COMPILE_FLAGS -fobjc-arc )
     
 add_subdirectory( rss )
